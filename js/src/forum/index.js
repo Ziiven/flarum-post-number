@@ -5,13 +5,15 @@ import CommentPost from 'flarum/common/components/CommentPost';
 app.initializers.add('post-number', () => {
   extend(CommentPost.prototype, 'headerItems', function(items){
     const postNumberText = app.translator.trans('post-number.forum.number-prefix', {number: this.attrs.post.data.attributes.number});
+    const postIsHidden = this.attrs.post.attribute("isHidden");
 
-    items.add(
-      'post-number',
-      <span className='postNumber'>
-        {postNumberText}
-      </span>
-    );
-
+    if(postIsHidden!==true){
+      items.add(
+        'post-number',
+        <span className='postNumber'>
+          {postNumberText}
+        </span>
+      );
+    }
   });
 });
